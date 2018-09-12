@@ -1,0 +1,25 @@
+spring:
+   profiles:
+     active: release
+   application:
+      name: demoservice
+server:
+   port: 8080
+
+
+
+---
+spring:
+   profiles: dev
+   application:
+      name: demoservice
+server:
+   port: 9090
+
+---
+spring:
+   profiles: release
+   application:
+      name: demoservice
+server:
+   port: 4431

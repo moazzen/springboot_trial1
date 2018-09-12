@@ -6,7 +6,7 @@
 	<groupId>com.bps.sw.model</groupId>
 	<artifactId>model_sb</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>${project.packaging}</packaging>
 
 	<name>model_sb</name>
 	<description>Demo project for Spring Boot</description>
@@ -29,6 +29,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 
 		<dependency>
@@ -36,7 +47,61 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
+
+
+
+
+
+	<!--dorost kardane prifile be in dard mikhorad ke gahi masalan shoma mikhahid dar mohite developetan
+	yek jar file besazid ama mogheii ke mikhahid versione khod ra release konid bayad war file besazid.
+	dar in halat 2 profile ba packaging joda misazid. in profileha dependency haye root ra be ers mibarand
+	vali dar halati ke shoma bekhahid mitavanid anha ra taghir dahid masalan dar halate zir ma dar profile e release
+	yeki az dependency ha ra dobare tarif kardeiim ba in tafavot ke  yeki az zirshakhehaye an ra exclude kardeiim ke yani
+	an zirshakhe option ast va nabayad dar lib ha bashad. sepas an ra dar zire an dobare tarif kardeiim be surate scope=provide
+	be in mana ke an ra dar yek pusheye joda be libha ezafe kon. in pusheye joda dar addresse \WEB-INF\lib-provided
+	dar dakhele war file gharar darad.-->
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<project.packaging>jar</project.packaging>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>release</id>
+			<properties>
+				<project.packaging>war</project.packaging>
+				<activatedProperties>release</activatedProperties>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-web</artifactId>
+					<exclusions>
+						<exclusion>
+							<artifactId>spring-boot-starter-tomcat</artifactId>
+							<groupId>org.springframework.boot</groupId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+				<dependency>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+					<groupId>org.springframework.boot</groupId>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
+
+
 
 	<build>
 		<plugins>

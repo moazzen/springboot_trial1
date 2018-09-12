@@ -16,6 +16,9 @@ public class Student {
         this.nationalCode = nationalCode;
     }
 
+    public Student() {
+    }
+
     public String getFirstName() {
         return firstName;
     }
