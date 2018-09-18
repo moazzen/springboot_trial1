@@ -26,7 +26,7 @@ public class Rest1 {
         david.setFirstName("david");
         david.setLastName("happy");
         david.setNationalCode("4");
-        productRepo.put(david.getNationalCode(), honey);
+        productRepo.put(david.getNationalCode(), david);
     }
 
 
@@ -37,6 +37,15 @@ public class Rest1 {
     @RequestMapping(value = "/rest1")
     public ResponseEntity<Object> getProduct() {
         return new ResponseEntity<>(productRepo.values(), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/rest1/{id}")
+    public ResponseEntity<Object> getProductById(@PathVariable int id) {
+        Student student = productRepo.get("" + id);
+        if (student == null)
+            return null;
+        return new ResponseEntity<>(student, HttpStatus.OK);
     }
 
     /*The HTTP POST request is used to create a resource. This method contains the Request Body.
@@ -59,7 +68,7 @@ public class Rest1 {
         productRepo.remove(id);
         student.setNationalCode(id);
         productRepo.put(id, student);
-        return new ResponseEntity<>("Product is updated successsfully", HttpStatus.OK);
+        return new ResponseEntity<>("Product is updated successsfully", HttpStatus.UNAUTHORIZED);
     }
 
 
